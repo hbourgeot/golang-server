@@ -11,7 +11,7 @@ func isAnError(err error) {
 func main() {
 	server := NewServer(":4000")
 	server.Handle("/", HandleRoot)
-	server.Handle("/api", HandleHome)
+	server.Handle("/api", server.AddMiddleware(HandleHome, CheckAuth(), Loggin()))
 	err := server.Listen()
 	isAnError(err)
 
